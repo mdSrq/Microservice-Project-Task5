@@ -1,0 +1,17 @@
+name: Kubernetes CD
+on:
+  workflow_run:
+    workflows: [Docker CI]
+    types:
+      - completed
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: deploy to cluster
+      uses: wahyd4/kubectl-helm-action@master
+      env:
+        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG }}
+      with:
+        args: kubectl apply -f ./k8s/app-deployment.yaml

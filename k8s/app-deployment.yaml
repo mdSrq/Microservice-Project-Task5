@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rest-app-api
+spec:
+  selector:
+    matchLabels:
+      app: rest-app-api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: rest-app-api
+    spec:
+      containers:
+        - name: rest-app-api
+          image: mdshariq614/rest-app-api
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MONGO_URL
+              value: mongodb://mongodb:27017/servers

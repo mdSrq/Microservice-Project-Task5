@@ -1,0 +1,16 @@
+version: "3"
+services:
+  api-database:
+    image: mongo
+    container_name: "mongo"
+    ports:
+      - 27017:27017
+    command: --smallfiles
+  api:
+    image: /servers-app
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+    ports:
+      - 8080:8080
+    links:
+      - mongo
